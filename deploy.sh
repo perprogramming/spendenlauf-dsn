@@ -10,4 +10,6 @@ composer install
 
 rsync --progress -r --links --exclude-from=.rsyncignore --delete . ssh-49905-plb@sinfin.de:/kunden/sinfin.de/webseiten/spendenlauf.perbernhardt.de
 
+ssh ssh-49905-plb@sinfin.de "cd /kunden/sinfin.de/webseiten/spendenlauf.perbernhardt.de && /usr/local/bin/php73 bin/console doctrine:migrations:migrate"
+
 rm .env.local || true

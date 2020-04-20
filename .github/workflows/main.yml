@@ -19,3 +19,5 @@ jobs:
           ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
       - run: ssh-keyscan sinfin.de >> ~/.ssh/known_hosts
       - run: bash deploy.sh
+        env:
+          DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
