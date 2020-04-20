@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Willkommen beim Spendenlauf!{% endblock %}
+
+{% block body %}
+    {% if not is_granted('ROLE_USER') %}
+        <a href="{{ path('login_index') }}">Jetzt einloggen</a>
+    {% else %}
+        Hallo {{ app.user.displayName }}! <a href="{{ path('logout') }}">Ausloggen</a>
+    {% endif %}
+{% endblock %}

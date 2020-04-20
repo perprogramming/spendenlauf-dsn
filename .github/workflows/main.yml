@@ -20,4 +20,6 @@ jobs:
       - run: ssh-keyscan sinfin.de >> ~/.ssh/known_hosts
       - run: bash deploy.sh
         env:
+          APP_SECRET: ${{ secrets.APP_SECRET }}
           DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
+          MAIL_PASSWORD: ${{ secrets.MAIL_PASSWORD }}

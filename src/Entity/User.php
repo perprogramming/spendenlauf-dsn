@@ -3,11 +3,12 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
  */
-class User
+class User implements UserInterface
 {
     /**
      * @ORM\Id()
@@ -21,6 +22,11 @@ class User
      */
     private $email;
 
+    public function __construct(string $email)
+    {
+        $this->email = $email;
+    }
+
     public function getId(): ?int
     {
         return $this->id;
@@ -31,10 +37,36 @@ class User
         return $this->email;
     }
 
-    public function setEmail(string $email): self
+    public function getRoles()
     {
-        $this->email = $email;
+        $roles = ['ROLE_USER'];
+        
+        if (in_array($this->getEmail(), ['per@bernhardt.ws', 'per.bernhardt@leanix.net', 'tim.bernhardt@germanschool.co.ke'])) {
+            $roles[] = 'ROLE_ADMIN';
+        }
 
-        return $this;
+        return $roles;
     }
+
+    public function getDisplayName()
+    {
+        $parts = explode('@', $this->getEmail());
+        $parts = explode('.', $parts[0]);
+
+        return implode(' ', array_map('ucfirst', $parts));
+    }
+
+    public function getPassword()
+    {}
+
+    public function getSalt()
+    {}
+
+    public function getUsername()
+    {
+        return $this->getEmail();
+    }
+
+    public function eraseCredentials()
+    {}
 }

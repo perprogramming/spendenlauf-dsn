@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Login{% endblock %}
+
+{% block body %}
+<div class="example-wrapper">
+    <form method="post" action="{{ path("login_email") }}">
+        <input type="hidden" name="token" value="{{ csrf_token('login-email') }}"/>
+        <input type="email" name="email" />
+        <button>Send</button>
+    </form>
+</div>
+{% endblock %}
