@@ -3,14 +3,14 @@
 {% block title %}Startseite{% endblock %}
 
 {% block body %}    
-    <div class="row mb-3">
+    <div class="row mb-2">
         <div class="col-12 text-center">
             <h2>Bisher gelaufene Runden</h2>
             <p class="rounds">{{ numberOfRounds }}</p>
         </div>
     </div>
     <div class="row">
-        <div class="col-12 text-center">
+        <div class="col-12 text-center mb-2">
             {% if is_granted('ROLE_USER') %}
                 <form action="{{ path('add_round') }}" method="post">
                     <button type="submit" class="btn btn-success btn-lg">Runde eintragen!</button>
