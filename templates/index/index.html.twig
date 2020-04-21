@@ -1,11 +1,25 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Willkommen beim Spendenlauf!{% endblock %}
+{% block title %}Startseite{% endblock %}
 
-{% block body %}
-    {% if not is_granted('ROLE_USER') %}
-        <a href="{{ path('login_index') }}">Jetzt einloggen</a>
-    {% else %}
-        Hallo {{ app.user.displayName }}! <a href="{{ path('logout') }}">Ausloggen</a>
-    {% endif %}
+{% block body %}    
+    <div class="row mb-3">
+        <div class="col-12 text-center">
+            <h2>Bisher gelaufene Runden</h2>
+            <p class="rounds">{{ numberOfRounds }}</p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12 text-center">
+            {% if is_granted('ROLE_USER') %}
+                <form action="{{ path('add_round') }}" method="post">
+                    <button type="submit" class="btn btn-success btn-lg">Runde eintragen!</button>
+                    <input type="hidden" name="token" value="{{ csrf_token('add-round') }}"/>
+                </form>
+            {% else %}
+                <p>Damit du deine gelaufenen Runden eintragen kannst, musst du dich einfach kurz einloggen:</p>
+                <p><a href="{{ path('login_index') }}" class="btn btn-success btn-lg">Jetzt einloggen</a>
+            {% endif %}
+        </div>
+    </div>
 {% endblock %}

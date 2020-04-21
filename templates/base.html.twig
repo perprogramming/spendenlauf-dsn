@@ -2,11 +2,41 @@
 <html>
     <head>
         <meta charset="UTF-8">
-        <title>{% block title %}Welcome!{% endblock %}</title>
-        {% block stylesheets %}{% endblock %}
+        <title>{% block title %}{% endblock %} - Spendenlauf der Deutschen Schule Nairobi</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        {% block stylesheets %}
+            {{ encore_entry_link_tags('app') }}
+        {% endblock %}
     </head>
     <body>
-        {% block body %}{% endblock %}
-        {% block javascripts %}{% endblock %}
+        <div class="container">
+            <div class="row bg-success align-items-center rounded-bottom mb-5 text-white">
+                <div class="col-8">
+                    <h1><a href="{{ path('index') }}" class="text-reset text-decoration-none"><small>Spendenlauf der</small><br>Deutschen Schule Nairobi</a></h1>
+                </div>
+                <div class="col-4">
+                    <a href="{{ path('index') }}" class="text-reset text-decoration-none"><img src="{{ asset('build/images/dsn.png') }}" class="w-75 my-2 float-right rounded img-fluid" alt="Deutsche Schule Nairobi"></a>
+                </div>
+            </div>
+            {% block body %}{% endblock %}
+
+        </div>
+        <div class="fixed-bottom">
+            <div class="container">
+                <div class="row bg-success align-items-center rounded-top mt-5 text-white">
+                    <div class="col-12">
+                        <p class="h4 mt-2">
+                            <a href="http://www.dsnairobi.de/index.php?article_id=101&amp;clang=0" class="text-reset">Impressum</a>
+                            {% if is_granted('ROLE_USER') %}
+                                <a href="{{ path('logout') }}" class="text-reset ml-3 float-right">Ausloggen</a>
+                            {% endif %}
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% block javascripts %}
+            {{ encore_entry_script_tags('app') }}
+        {% endblock %}
     </body>
 </html>

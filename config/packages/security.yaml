@@ -22,7 +22,7 @@ security:
     # Note: Only the *first* access control that matches will be used
     access_control:
         - { path: ^/admin/, roles: ROLE_ADMIN }
-        - { path: ^/login/email/$, roles: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: ^/login/$, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/einloggen/email-versenden/$, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/einloggen/$, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/$, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/, roles: ROLE_USER }

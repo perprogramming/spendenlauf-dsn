@@ -9,6 +9,8 @@ echo "DATABASE_URL=mysql://db49905_13:$DB_PASSWORD@mysql5.sinfin.de/db49905_13?s
 echo "MAILER_DSN=smtps://info%40spendenlauf.perbernhardt.de:$MAIL_PASSWORD@smtprelaypool.ispgateway.de" >> .env.local
 
 composer install
+yarn install
+yarn encore production
 
 rsync -r --links --exclude-from=.rsyncignore --delete . ssh-49905-plb@sinfin.de:/kunden/sinfin.de/webseiten/spendenlauf.perbernhardt.de
 

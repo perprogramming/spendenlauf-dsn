@@ -12,7 +12,7 @@ use App\Security\Authenticator;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 /**
- * @Route("/login")
+ * @Route("/einloggen")
  */
 class LoginController extends AbstractController
 {
@@ -21,13 +21,14 @@ class LoginController extends AbstractController
      */
     public function index()
     {
-        return $this->render('login/index.html.twig', [
-            'controller_name' => 'LoginController',
-        ]);
+        if ($user = $this->getUser()) {
+            return $this->redirectToRoute('index');
+        }
+        return $this->render('login/index.html.twig');
     }
 
     /**
-     * @Route("/email/", name="login_email", methods={"POST"})
+     * @Route("/email-versenden/", name="login_email", methods={"POST"})
      */
     public function sendEmail(Authenticator $authenticator, MailerInterface $mailer, Request $request)
     {
@@ -37,6 +38,12 @@ class LoginController extends AbstractController
         }
 
         $email = $request->request->get('email');
+
+        if (!preg_match('([^@]+@(germanschool.co.ke|bernhardt.ws))', $email)) {
+            $this->addFlash('error', "Bitte verwende nur deine schulische E-Mail-Adresse (z.B. max.mustermann@germanschool.co.ke)!");
+            return $this->redirectToRoute('login_index');
+        }
+
         $signature = $authenticator->signEmail($email);
         $url = $this->generateUrl('index', ['email' => $email, 'signature' => $signature], UrlGeneratorInterface::ABSOLUTE_URL);
 
@@ -44,12 +51,11 @@ class LoginController extends AbstractController
         $message->from("info@spendenlauf.perbernhardt.de")
             ->to($request->request->get('email'))
             ->subject("Einloggen beim Spendenlauf")
-            ->text("Logge dich jetzt beim Spendenlauf ein: " . $url);
+            ->text("Hallo!\n\nLogge dich jetzt beim Spendenlauf ein, indem du auf folgenden Link klickst:\n\n$url\n\nViel Erfolg!");
         
         $mailer->send($message);
         
-        $this->addFlash("info", "Du solltest jetzt eine E-Mail mit einem Link zum einloggen haben!");
+        $this->addFlash("info", "Die E-Mail mit dem Link zum Einloggen wurde erfolgreich versendet!");
         return $this->redirectToRoute('login_index');
     }
-
 }

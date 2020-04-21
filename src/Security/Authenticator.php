@@ -66,7 +66,7 @@ class Authenticator extends AbstractGuardAuthenticator
 
     public function start(Request $request, AuthenticationException $authException = null)
     {
-        return new RedirectResponse("/login/");
+        return new RedirectResponse("/einloggen/");
     }
 
     public function supportsRememberMe()
@@ -76,6 +76,6 @@ class Authenticator extends AbstractGuardAuthenticator
 
     public function signEmail(string $email)
     {
-        return hash('sha512', $email . $this->kernelSecret);
+        return hash('md5', $email . $this->kernelSecret);
     }
 }

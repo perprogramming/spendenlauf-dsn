@@ -1,13 +1,32 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Login{% endblock %}
+{% block title %}Einloggen{% endblock %}
 
 {% block body %}
-<div class="example-wrapper">
-    <form method="post" action="{{ path("login_email") }}">
-        <input type="hidden" name="token" value="{{ csrf_token('login-email') }}"/>
-        <input type="email" name="email" />
-        <button>Send</button>
-    </form>
-</div>
+    <div class="row">
+        <div class="col-12">
+            <h2>Einloggen</h2>
+            {% for message in app.flashes('info') %}
+                <div class="alert alert-success">
+                    {{ message }}
+                </div>
+            {% endfor %}
+            {% for message in app.flashes('error') %}
+                <div class="alert alert-danger">
+                    {{ message }}
+                </div>
+            {% endfor %}
+            <p>Um dich einzuloggen, gibst du einfach in das folgende Feld deine schulische E-Mail-Adresse ein, z.B. <span class="font-italic font-weight-bold">max.mustermann@germanschool.co.ke</span>. Sobald du das Formular abschickst, erhälst du eine E-Mail mit einem Link. Klicke einfach auf den Link in der E-Mail, um dich einzuloggen.</p>
+            <form method="post" action="{{ path("login_email") }}">
+                <div class="form-group">
+                    <label for="emailField">E-Mail Adresse</label>
+                    <input type="email" name="email" id="emailField" class="form-control">
+                </div>
+                <div class="form-group">
+                    <button type="submit" class="btn btn-success">Link versenden</button>
+                    <input type="hidden" name="token" value="{{ csrf_token('login-email') }}"/>
+                </div>
+            </form>
+        </div>
+    </div>
 {% endblock %}
