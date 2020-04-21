@@ -10,7 +10,7 @@
         </div>
     </div>
     <div class="row">
-        <div class="col-12 text-center mb-2">
+        <div class="col-12 text-center mb-5">
             {% if is_granted('ROLE_USER') %}
                 <form action="{{ path('add_round') }}" method="post">
                     <button type="submit" class="btn btn-success btn-lg">Runde eintragen!</button>
