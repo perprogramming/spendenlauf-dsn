@@ -5,7 +5,7 @@ namespace App\Repository;
 use App\Entity\Round;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
-use App\Entity\User;
+use Doctrine\ORM\QueryBuilder;
 
 /**
  * @method Round|null find($id, $lockMode = null, $lockVersion = null)
@@ -20,21 +20,46 @@ class RoundRepository extends ServiceEntityRepository
         parent::__construct($registry, Round::class);
     }
 
-    public function countAll(): int
+    public function countAll($userId = null): int
     {
-        return $this->createQueryBuilder('r')
-            ->select('count(r.id)')
-            ->getQuery()
+        $queryBuilder = $this->createQueryBuilder('r')
+            ->select('count(r.id)');
+
+        $this->filderByUserId($queryBuilder, $userId);
+        
+            
+        return $queryBuilder->getQuery()
             ->getSingleScalarResult();
     }
 
-    public function countByUser(User $user): int
+    public function findAllOf($userId) {
+        $queryBuilder = $this->createQueryBuilder('r')
+            ->select('r');
+
+        $this->filderByUserId($queryBuilder, $userId);
+
+        return $queryBuilder->getQuery()
+            ->getResult();
+    }
+
+    public function list($userId, $offset, $limit): array
     {
-        return $this->createQueryBuilder('r')
-            ->select('count(r.id)')
-            ->where('r.userId = :userId')
-            ->setParameter('userId', $user->getId())
-            ->getQuery()
-            ->getSingleScalarResult();
+        $queryBuilder = $this->createQueryBuilder('r')
+            ->select('r')
+            ->orderBy('r.timestamp', 'desc')
+            ->setFirstResult($offset)
+            ->setMaxResults($limit);
+
+        $this->filderByUserId($queryBuilder, $userId);
+
+        return $queryBuilder->getQuery()
+            ->getResult();
+    }
+
+    private function filderByUserId(QueryBuilder $queryBuilder, $userId) {
+        if ($userId) {
+            $queryBuilder->where('r.userId = :userId')
+                ->setParameter('userId', $userId);
+        }
     }
 }

@@ -19,7 +19,7 @@ class IndexController extends AbstractController
         $myRounds = null;
 
         if ($user = $this->getUser()) {
-            $myRounds = $roundsRepository->countByUser($user);
+            $myRounds = $roundsRepository->countAll($user->getId());
         }
 
         return $this->render('index/index.html.twig', [

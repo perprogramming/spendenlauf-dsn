@@ -1,0 +1,76 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Admin-Bereich{% endblock %}
+
+{% block body %}    
+    <div class="row mb-1">        
+        <div class="col-12 text-center">
+            <div id="carousel" class="carousel slide" data-ride="carousel" data-interval="false">
+                <div class="carousel-inner">
+                    <div class="carousel-item active">
+                        <h2>
+                            {% if user %}
+                                {{ user.displayName }}'s Runden
+                            {% else %}
+                                Alle Runden
+                            {% endif %}
+                        </h2>
+                        {% if user %}
+                            <p><a href="{{ path('admin_index') }}" class="text-reset"><u>Zurück zu allen Runden...</a></p>
+                        {% endif %}
+                        <p>Runde {{ min(total, offset + 1) }} - {{ min(offset + limit, total) }}, Insgesamt {{ total }}
+                        {% if user %}
+                            <p>
+                                <form action="{{ path('admin_delete_rounds', {userId: userId}) }}" method="post">
+                                    <button type="submit" class="btn btn-danger btn-sm">Alle Runden von {{ user.displayName }} löschen</button>
+                                    <input type="hidden" name="token" value="{{ csrf_token('delete-rounds') }}"/>
+                                </form>
+                            </p>
+                        {% endif %}
+                        <div class="container">
+                            <div class="row justify-content-center">
+                                <div class="col-10">
+                                    <table class="table">
+                                        <thead>
+                                            <tr>
+                                                <th scope="col">Zeitpunkt</th>
+                                                <th scope="col">Name</th>
+                                                <th scope="col">Aktion</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {% for round in rounds %}
+                                                <tr>
+                                                    <td>{{ round.timestamp | date('d.m.Y H:i:s') }}</td>
+                                                    <td><a href="{{ path('admin_index', {'userId': round.userId}) }}" class="text-reset"><u>{{ users[round.userId].displayName }}</u></a></td>
+                                                    <td>
+                                                        <form action="{{ path('admin_delete_round', {id: round.id}) }}" method="post">
+                                                            <button type="submit" class="btn btn-danger btn-sm">X</button>
+                                                            <input type="hidden" name="token" value="{{ csrf_token('delete-round') }}"/>
+                                                        </form>
+                                                    </td>
+                                                </tr>
+                                            {% endfor %}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% if offset > 0 %}
+                    <a class="carousel-control-prev" href="{{ path('admin_index', {userId: userId, offset: offset - limit}) }}" role="button">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="sr-only">Previous</span>
+                    </a>
+                {% endif %}
+                {% if (offset + limit) < total %}
+                    <a class="carousel-control-next" href="{{ path('admin_index', {userId: userId, offset: offset + limit}) }}" role="button">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="sr-only">Next</span>
+                    </a>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+{% endblock %}

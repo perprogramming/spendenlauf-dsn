@@ -41,7 +41,7 @@ class User implements UserInterface
     {
         $roles = ['ROLE_USER'];
         
-        if (in_array($this->getEmail(), ['per@bernhardt.ws', 'per.bernhardt@leanix.net', 'tim.bernhardt@germanschool.co.ke'])) {
+        if (in_array($this->getEmail(), ['per@bernhardt.ws', 'tim.bernhardt@germanschool.co.ke', 'tim@bernhardt.ws'])) {
             $roles[] = 'ROLE_ADMIN';
         }
 

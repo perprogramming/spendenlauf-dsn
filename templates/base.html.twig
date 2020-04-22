@@ -30,6 +30,9 @@
                             {% if is_granted('ROLE_USER') %}
                                 <a href="{{ path('logout') }}" class="text-reset ml-3 float-right">Ausloggen</a>
                             {% endif %}
+                            {% if is_granted('ROLE_ADMIN') %}
+                                <a href="{{ path('admin_index') }}" class="text-reset ml-3 float-right">Admin</a>
+                            {% endif %}
                         </p>
                     </div>
                 </div>

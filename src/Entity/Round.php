@@ -6,6 +6,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\RoundRepository")
+ * @ORM\Table(name="round",indexes={@ORM\Index(name="list_idx", columns={"timestamp"})})
  */
 class Round
 {
