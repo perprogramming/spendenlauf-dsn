@@ -5,6 +5,7 @@ namespace App\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Entity\Round;
+use App\Repository\RoundRepository;
 
 class IndexController extends AbstractController
 {
@@ -13,8 +14,17 @@ class IndexController extends AbstractController
      */
     public function index()
     {
+        /** @var RoundsRepository */
+        $roundsRepository = $this->getDoctrine()->getRepository(Round::class);
+        $myRounds = null;
+
+        if ($user = $this->getUser()) {
+            $myRounds = $roundsRepository->countByUser($user);
+        }
+
         return $this->render('index/index.html.twig', [
-            'numberOfRounds' => $this->getDoctrine()->getRepository(Round::class)->countAll()
+            'numberOfRounds' => $roundsRepository->countAll(),
+            'myRounds' => $myRounds
         ]);
     }
 

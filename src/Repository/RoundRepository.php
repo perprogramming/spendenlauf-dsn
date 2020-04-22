@@ -5,6 +5,7 @@ namespace App\Repository;
 use App\Entity\Round;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use App\Entity\User;
 
 /**
  * @method Round|null find($id, $lockMode = null, $lockVersion = null)
@@ -23,6 +24,16 @@ class RoundRepository extends ServiceEntityRepository
     {
         return $this->createQueryBuilder('r')
             ->select('count(r.id)')
+            ->getQuery()
+            ->getSingleScalarResult();
+    }
+
+    public function countByUser(User $user): int
+    {
+        return $this->createQueryBuilder('r')
+            ->select('count(r.id)')
+            ->where('r.userId = :userId')
+            ->setParameter('userId', $user->getId())
             ->getQuery()
             ->getSingleScalarResult();
     }

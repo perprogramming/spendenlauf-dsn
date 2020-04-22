@@ -7,3 +7,8 @@ $green: #7cad31;
 .rounds {
     font-size: 8em;
 }
+
+.carousel-control-next-icon,
+.carousel-control-prev-icon {
+  filter: invert(1);
+}

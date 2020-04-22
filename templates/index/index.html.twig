@@ -3,10 +3,32 @@
 {% block title %}Startseite{% endblock %}
 
 {% block body %}    
-    <div class="row mb-1">
+    <div class="row mb-1">        
         <div class="col-12 text-center">
-            <h2>Bisher gelaufene Runden</h2>
-            <p class="rounds">{{ numberOfRounds }}</p>
+            <div id="carousel" class="carousel slide" data-ride="carousel" data-interval="false">
+                <div class="carousel-inner">
+                    <div class="carousel-item{% if not is_granted('ROLE_USER') %} active{% endif %}">
+                        <h2>Bisher gelaufene Runden</h2>
+                        <p class="rounds">{{ numberOfRounds }}</p>
+                    </div>
+                    {% if is_granted('ROLE_USER') %}
+                        <div class="carousel-item active">
+                            <h2>Deine bisher gelaufenen Runden</h2>
+                            <p class="rounds">{{ myRounds }}</p>
+                        </div>
+                    {% endif %}
+                </div>
+                {% if is_granted('ROLE_USER') %}
+                    <a class="carousel-control-prev" href="#carousel" role="button" data-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="sr-only">Previous</span>
+                    </a>
+                    <a class="carousel-control-next" href="#carousel" role="button" data-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="sr-only">Next</span>
+                    </a>
+                {% endif %}
+            </div>
         </div>
     </div>
     <div class="row">
