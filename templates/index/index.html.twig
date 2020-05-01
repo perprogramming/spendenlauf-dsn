@@ -10,7 +10,7 @@
                     <div class="carousel-item{% if not roundWasAdded %} active{% endif %}">
                         <h2 class="mb-4">Aktueller Spendenbetrag</h2>                    
                         <div id="piechart"></div>
-                        <p class="h3 mt-4">Bisher wurden <strong>{{ statistics['current_amount'] }} KSh</strong> erlaufen!</p>
+                        <p class="h3 mt-4">Bisher wurden <strong>{{ numberOfRounds }} Runden</strong> und <strong>{{ statistics['current_amount'] }} KSh</strong> erlaufen!</p>
                         <p>Unser Ziel sind <strong>{{ statistics['target_amount'] }} KSh</strong>.</p>                        
                         <p><a href="{{ path('index') }}" class="btn btn-success btn-lg">Aktualisieren</a>
                     </div>                    
