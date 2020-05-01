@@ -32,4 +32,8 @@ class UserRepository extends ServiceEntityRepository
         return array_combine($userIds, $users);
     }
 
+    public function update(User $user) {
+        $this->getEntityManager()->flush();
+    }
+
 }

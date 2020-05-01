@@ -24,11 +24,11 @@ class RoundsController extends AbstractController
 
         $round = new Round($user);
 
-        $entityManager = $this->getDoctrine()->getManager();
-        $entityManager->persist($round);
-        $entityManager->flush();
+        /** @var RoundRepository */
+        $roundRepository = $this->getDoctrine()->getRepository(Round::class);
+        $roundRepository->add($round);
 
-        return $this->redirectToRoute('index');
+        return $this->redirectToRoute('index', ['rundeWurdeHinzugefuegt' => true]);
     }
 
 }

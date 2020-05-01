@@ -4,8 +4,18 @@ $green: #7cad31;
 
 @import "~bootstrap/scss/bootstrap";
 
-.rounds {
-    font-size: 8em;
+.very-big-font {
+  font-size: 128px;   
+  line-height: 128px; 
+}
+
+.big-font {
+  font-size: 64px;
+  line-height: 64px;
+}
+
+#piechart {
+  width: 100%;  
 }
 
 .carousel-control-next-icon,

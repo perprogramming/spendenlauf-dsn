@@ -5,10 +5,11 @@ namespace App\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Entity\Round;
+use App\Entity\Settings;
 use App\Entity\User;
 use App\Repository\RoundRepository;
+use App\Repository\SettingsRepository;
 use App\Repository\UserRepository;
-use Doctrine\ORM\EntityManager;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -53,7 +54,30 @@ class AdminController extends AbstractController
     }
 
     /**
-     * @Route("/delete/{id}", name="admin_delete_round")
+     * @Route("/einstellungen", name="admin_settings")
+     */
+    public function settings() {
+        return $this->render('admin/settings.html.twig', [
+            'settings' => $this->getSettingsRepository()->get()
+        ]);
+    }
+
+    /**
+     * @Route("/einstellungen/aktualisieren", name="admin_settings_update")
+     */
+    public function updateSettings(Request $request) {
+        $submittedToken = $request->request->get('token');
+        if (!$this->isCsrfTokenValid('update-settings', $submittedToken)) {
+            throw new AccessDeniedException();
+        }
+
+        $this->getSettingsRepository()->set($request->request->get('settings'));
+
+        return $this->redirectToRoute('admin_index');
+    }
+
+    /**
+     * @Route("/loesche-runde/{id}", name="admin_delete_round")
      */
     public function delete($id, Request $request)
     {
@@ -62,15 +86,15 @@ class AdminController extends AbstractController
             throw new AccessDeniedException();
         }
 
-        $round = $this->getRoundRepository()->find($id);
-        $this->getEntityManager()->remove($round);
-        $this->getEntityManager()->flush();
+        $roundRepository = $this->getRoundRepository();
+        $round = $roundRepository->find($id);
+        $roundRepository->delete($round);        
 
         return $this->redirectToRoute('admin_index');
     }
 
     /**
-     * @Route("/delete-all/{userId}", name="admin_delete_rounds")
+     * @Route("/loesche-alle-runden-von/{userId}", name="admin_delete_rounds")
      */
     public function deleteAll($userId, Request $request)
     {
@@ -79,11 +103,9 @@ class AdminController extends AbstractController
             throw new AccessDeniedException();
         }
 
-        $rounds = $this->getRoundRepository()->findAllOf($userId);
-        foreach ($rounds as $round) {
-            $this->getEntityManager()->remove($round);
-        }
-        $this->getEntityManager()->flush();
+        $roundRepository = $this->getRoundRepository();
+        $rounds = $roundRepository->findAllOf($userId);
+        $roundRepository->deleteMany($rounds);        
 
         return $this->redirectToRoute('admin_index');
     }
@@ -98,8 +120,8 @@ class AdminController extends AbstractController
         return $this->getDoctrine()->getRepository(Round::class);
     }
 
-    private function getEntityManager(): EntityManager
+    private function getSettingsRepository(): SettingsRepository
     {
-        return $this->getDoctrine()->getManager();
+        return $this->getDoctrine()->getRepository(Settings::class);
     }
 }

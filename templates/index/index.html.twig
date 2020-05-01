@@ -4,18 +4,26 @@
 
 {% block body %}    
     <div class="row mb-1">        
-        <div class="col-12 text-center">
+        <div class="col-12 text-center ">            
             <div id="carousel" class="carousel slide" data-ride="carousel" data-interval="false">
                 <div class="carousel-inner">
-                    <div class="carousel-item{% if not is_granted('ROLE_USER') %} active{% endif %}">
-                        <h2>Bisher gelaufene Runden</h2>
-                        <p class="rounds">{{ numberOfRounds }}</p>
-                    </div>
+                    <div class="carousel-item{% if not roundWasAdded %} active{% endif %}">
+                        <h2 class="mb-4">Aktueller Spendenbetrag</h2>                    
+                        <div id="piechart"></div>
+                        <p class="h3 mt-4">Bisher wurden <strong>{{ statistics['current_amount'] }} KSh</strong> erlaufen!</p>
+                        <p>Unser Ziel sind <strong>{{ statistics['target_amount'] }} KSh</strong>.</p>                        
+                        <p><a href="{{ path('index') }}" class="btn btn-success btn-lg">Aktualisieren</a>
+                    </div>                    
                     {% if is_granted('ROLE_USER') %}
-                        <div class="carousel-item active">
-                            <h2>Deine bisher gelaufenen Runden</h2>
-                            <p class="rounds">{{ myRounds }}</p>
-                        </div>
+                        <div class="carousel-item{% if roundWasAdded %} active{% endif %}">
+                            <h2>Dein Spendenbetrag</h2>
+                            <p class="h3 mt-4 mb-4">Bisher hast du <br /><strong>{{ myRounds }} Runden</strong><br /> geschafft und hast damit <br /><strong>{{ myCurrentAmount }} KSh</strong><br /> erlaufen!</p>                            
+                            <form action="{{ path('add_round') }}" method="post" class="mb-1">
+                                <button type="submit" class="btn btn-success btn-lg">Runde eintragen!</button>
+                                <input type="hidden" name="token" value="{{ csrf_token('add-round') }}"/>
+                            </form>
+                            <p><a href="{{ path('user_settings') }}" class="btn btn-secondary">Deinen Betrag pro Runde einstellen</a></p>                                
+                        </div>                        
                     {% endif %}
                 </div>
                 {% if is_granted('ROLE_USER') %}
@@ -26,22 +34,45 @@
                     <a class="carousel-control-next" href="#carousel" role="button" data-slide="next">
                         <span class="carousel-control-next-icon" aria-hidden="true"></span>
                         <span class="sr-only">Next</span>
-                    </a>
+                    </a>                
                 {% endif %}
             </div>
         </div>
-    </div>
-    <div class="row">
-        <div class="col-12 text-center mb-5">
-            {% if is_granted('ROLE_USER') %}
-                <form action="{{ path('add_round') }}" method="post">
-                    <button type="submit" class="btn btn-success btn-lg">Runde eintragen!</button>
-                    <input type="hidden" name="token" value="{{ csrf_token('add-round') }}"/>
-                </form>
-            {% else %}
+    </div> 
+    {% if not is_granted('ROLE_USER') %}
+        <div class="row mb-1">
+            <div class="col-12 text-center">                
                 <p>Damit du deine gelaufenen Runden eintragen kannst, musst du dich einfach kurz einloggen:</p>
-                <p><a href="{{ path('login_index') }}" class="btn btn-success btn-lg">Jetzt einloggen</a>
-            {% endif %}
+                <p><a href="{{ path('login_index') }}" class="btn btn-secondary btn-lg">Jetzt einloggen</a>
+            </div>
         </div>
+    {% endif %}
+    <div class="row mb-4">
     </div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript">
+        google.charts.load('current', {'packages':['corechart']});
+        google.charts.setOnLoadCallback(function () {
+            var data = new google.visualization.DataTable();
+            data.addColumn({type:'string', role:'tooltip'});                                
+            data.addColumn('number', 'KSh')                                
+            data.addRows([                                    
+                ['Bisher wurden {{ statistics['current_amount'] }} KSh erlaufen', {{ statistics['current_amount'] }}],
+                ['Es fehlen noch {{ statistics['missing_amount'] }} KSh', {{ statistics['missing_amount'] }}]
+            ]);
+
+            var options = {
+                legend: {position: 'none'},
+                chartArea: {width:'100%',height:'100%'},
+                slices: {0: {color: '#7cad31'}, 1: {color: 'lightgrey'}}
+            };
+
+            var chart = new google.visualization.PieChart(document.getElementById('piechart'));
+            chart.draw(data, options);                                            
+        });
+    </script>
 {% endblock %}

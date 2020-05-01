@@ -22,6 +22,11 @@ class User implements UserInterface
      */
     private $email;
 
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $rewardPerRound;
+
     public function __construct(string $email)
     {
         $this->email = $email;
@@ -69,4 +74,16 @@ class User implements UserInterface
 
     public function eraseCredentials()
     {}
+
+    public function getRewardPerRound(): ?int
+    {
+        return $this->rewardPerRound;
+    }
+
+    public function setRewardPerRound(int $rewardPerRound): self
+    {
+        $this->rewardPerRound = $rewardPerRound;
+
+        return $this;
+    }
 }
