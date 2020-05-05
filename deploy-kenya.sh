@@ -17,10 +17,6 @@ cat <<EOF > .htaccess
 # php -- END cPanel-generated handler, do not edit
 EOF
 
-composer install
-yarn install
-yarn encore production
-
 # copy to jumphost
 rsync -r --links --exclude-from=.rsyncignore --delete . PB@timbernhardt.synology.me:/var/services/homes/PB/spendenlauf
 

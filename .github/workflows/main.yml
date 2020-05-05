@@ -28,6 +28,8 @@ jobs:
             ${{ secrets.SSH_PRIVATE_KEY }}
             ${{ secrets.SSH_PRIVATE_KEY }}
       - run: ssh-keyscan sinfin.de >> ~/.ssh/known_hosts
+      - run: ssh-keyscan timbernhardt.synology.me >> ~/.ssh/known_hosts
+      - run: bash build.sh
       - run: bash deploy-df.sh
         env:
           APP_SECRET: ${{ secrets.APP_SECRET }}
