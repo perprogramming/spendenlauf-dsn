@@ -1,6 +1,6 @@
 #!/bin/bash
 
-set -e
+set -ex
 
 echo "" > .env.local
 echo "APP_ENV=prod" >> .env.local
