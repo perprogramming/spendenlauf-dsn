@@ -21,9 +21,9 @@ EOF
 rsync -r --links --exclude-from=.rsyncignore --delete . PB@timbernhardt.synology.me:/var/services/homes/PB/spendenlauf
 
 # rsync from jumphost to target
-ssh -t -A PB@timbernhardt.synology.me "rsync -e \"ssh -t -p 6543\" -r --links --delete . germansc@germanschool.co.ke:/home/germansc/charity.germanschool.co.ke"
+ssh -tt -A PB@timbernhardt.synology.me "rsync -e \"ssh -tt -p 6543\" -r --links --delete spendenlauf/ germansc@germanschool.co.ke:/home/germansc/charity.germanschool.co.ke"
 
 # run migrations on target
-ssh -t -A PB@timbernhardt.synology.me "ssh -t -p 6543 germansc@germanschool.co.ke \"cd /home/germansc/charity.germanschool.co.ke && php bin/console --env=dev doctrine:migrations:migrate -n --allow-no-migration && php bin/console cache:clear\""
+ssh -tt -A PB@timbernhardt.synology.me "ssh -tt -p 6543 germansc@germanschool.co.ke \"cd /home/germansc/charity.germanschool.co.ke && php bin/console --env=dev doctrine:migrations:migrate -n --allow-no-migration && php bin/console cache:clear\""
 
 rm .env.local || true
