@@ -24,10 +24,17 @@ jobs:
             ${{ runner.os }}-yarn-
       - uses: webfactory/ssh-agent@v0.2.0
         with:
-          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+          ssh-private-key: |
+            ${{ secrets.SSH_PRIVATE_KEY }}
+            ${{ secrets.SSH_PRIVATE_KEY }}
       - run: ssh-keyscan sinfin.de >> ~/.ssh/known_hosts
-      - run: bash deploy.sh
+      - run: bash deploy-df.sh
         env:
           APP_SECRET: ${{ secrets.APP_SECRET }}
           DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
+          MAIL_PASSWORD: ${{ secrets.MAIL_PASSWORD }}
+      - run: bash deploy-kenya.sh
+        env:
+          APP_SECRET: ${{ secrets.APP_SECRET }}
+          DB_PASSWORD_KENYA: ${{ secrets.DB_PASSWORD_KENYA }}
           MAIL_PASSWORD: ${{ secrets.MAIL_PASSWORD }}

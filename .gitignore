@@ -11,6 +11,7 @@
 
 /.sshkey
 /.known_hosts
+/.htaccess
 ###> symfony/webpack-encore-bundle ###
 /node_modules/
 /public/build/
