@@ -25,7 +25,7 @@ class User implements UserInterface
     /**
      * @ORM\Column(type="integer")
      */
-    private $rewardPerRound;
+    private $rewardPerRound = 0;
 
     public function __construct(string $email)
     {
