@@ -48,7 +48,7 @@ class LoginController extends AbstractController
         $url = $this->generateUrl('index', ['email' => $email, 'signature' => $signature], UrlGeneratorInterface::ABSOLUTE_URL);
 
         $message = new Email();
-        $message->from("info@spendenlauf.perbernhardt.de")
+        $message->from($this->getParameter('mail_sender'))
             ->to($request->request->get('email'))
             ->subject("Einloggen beim Spendenlauf")
             ->text("Hallo!\n\nLogge dich jetzt beim Spendenlauf ein, indem du auf folgenden Link klickst:\n\n$url\n\nViel Erfolg!");
