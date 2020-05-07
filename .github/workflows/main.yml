@@ -39,4 +39,4 @@ jobs:
         env:
           APP_SECRET: ${{ secrets.APP_SECRET }}
           DB_PASSWORD_KENYA: ${{ secrets.DB_PASSWORD_KENYA }}
-          MAIL_PASSWORD: ${{ secrets.MAIL_PASSWORD }}
+          MAIL_PASSWORD_KENYA: ${{ secrets.MAIL_PASSWORD_KENYA }}
