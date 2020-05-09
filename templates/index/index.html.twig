@@ -42,8 +42,8 @@
     {% if not is_granted('ROLE_USER') %}
         <div class="row mb-1">
             <div class="col-12 text-center">                
-                <p>Damit du deine gelaufenen Runden eintragen kannst, musst du dich einfach kurz einloggen:</p>
-                <p><a href="{{ path('login_index') }}" class="btn btn-secondary btn-lg">Jetzt einloggen</a>
+                <p>{{ 'template.index.login.text' | trans }}</p>
+                <p><a href="{{ path('login_index') }}" class="btn btn-secondary btn-lg">{{ 'template.index.login.button' | trans }}</a>
             </div>
         </div>
     {% endif %}

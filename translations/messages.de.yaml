@@ -35,6 +35,9 @@ template:
             stats: Bisher hast du %lineBreak%%strongStart%%numberOfRounds% Runden%strongEnd%%lineBreak% geschafft und damit %lineBreak%%strongStart%%currentAmount% KSh%strongEnd%%lineBreak% erlaufen!
             addRound: Runde eintragen!
             settings: Deinen Betrag pro Runde einstellen
+        login:
+            text: 'Damit du deine gelaufenen Runden eintragen kannst, musst du dich einfach kurz einloggen:'
+            button: Jetzt einloggen
     settings:
         title: Deine Einstellungen
         rewardLabel: Geldbetrag pro Runde (KSh)

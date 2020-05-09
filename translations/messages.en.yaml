@@ -34,6 +34,9 @@ template:
             stats: So far you have run %lineBreak%%strongStart%%numberOfRounds% rounds%strongEnd%%lineBreak% and by that you have added %lineBreak%%strongStart%%currentAmount% KSh%strongEnd%%lineBreak% to the donation!
             addRound: Add round!
             settings: Configure your donation per round
+        login:
+            text: 'Just login if you want to add rounds that you have run:'
+            button: Login now
     settings:
         title: Your Settings
         rewardLabel: Donation per round (KSh)
