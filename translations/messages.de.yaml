@@ -1,0 +1,60 @@
+template:
+    base:
+        title:
+            suffix: Spendenlauf der Deutschen Schule Nairobi
+        header:
+            title: '%smallStart%Spendenlauf der%smallEnd%%lineBreak%Deutschen Schule Nairobi'
+            logoAlt: Deutsche Schule Nairobi
+        footer:
+            imprint: Impressum
+            logout: Ausloggen
+            admin: Admin
+            en: Englisch
+            de: Deutsch
+    login:
+        title: Einloggen
+        text: |
+            Um dich einzuloggen, gibst du einfach in das folgende Feld deine schulische E-Mail-Adresse ein,
+            z.B. %italicStart%max.mustermann@germanschool.co.ke%italicEnd%.
+            Sobald du das Formular abschickst, erhälst du eine E-Mail mit einem Link.
+            Klicke einfach auf den Link in der E-Mail, um dich einzuloggen.
+        emailLabel: E-Mail Adresse
+        buttonLabel: Link versenden
+    index:
+        title: Startseite
+        total:
+            title: Aktueller Spendenbetrag
+            stats: Bisher wurden %strongStart%%numberOfRounds% Runden%strongEnd% und %strongStart%%currentAmount% KSh%strongEnd% erlaufen!
+            target: Unser Ziel sind %strongStart%%targetAmount% KSh%strongEnd%.
+            refresh: Aktualisieren
+            chart:
+                currentAmount: Bisher wurden %currentAmount% KSh erlaufen
+                missingAmount: Es fehlen noch %missingAmount% KSh
+        personal:
+            title: Dein Spendenbetrag
+            stats: Bisher hast du %lineBreak%%strongStart%%numberOfRounds% Runden%strongEnd%%lineBreak% geschafft und damit %lineBreak%%strongStart%%currentAmount% KSh%strongEnd%%lineBreak% erlaufen!
+            addRound: Runde eintragen!
+            settings: Deinen Betrag pro Runde einstellen
+    settings:
+        title: Deine Einstellungen
+        rewardLabel: Geldbetrag pro Runde (KSh)
+        submitLabel: Speichern      
+
+controller:
+    rounds:
+        parameter:
+            round_was_added: rundeWurdeHinzugefuegt
+    login:
+        messages:
+            invalidEmail: Bitte verwende nur deine schulische E-Mail-Adresse (z.B. max.mustermann@germanschool.co.ke)!
+            success: Die E-Mail mit dem Link zum Einloggen wurde erfolgreich versendet!
+        email:
+            subject: Einloggen beim Spendenlauf
+            text: |
+                Hallo!
+                
+                Logge dich jetzt beim Spendenlauf ein, indem du auf folgenden Link klickst:
+                  
+                %url%
+                
+                Viel Erfolg!

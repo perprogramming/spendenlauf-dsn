@@ -2,7 +2,7 @@
 <html>
     <head>
         <meta charset="UTF-8">
-        <title>{% block title %}{% endblock %} - Spendenlauf der Deutschen Schule Nairobi</title>
+        <title>{% block title %}{% endblock %} - {{ 'template.base.title.suffix' | trans }}</title>
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         {% block stylesheets %}
             {{ encore_entry_link_tags('app') }}
@@ -12,10 +12,10 @@
         <div class="container mb-5">
             <div class="row bg-success align-items-center rounded-bottom mb-3 text-white">
                 <div class="col-8">
-                    <h1><a href="{{ path('index') }}" class="text-reset text-decoration-none"><small>Spendenlauf der</small><br>Deutschen Schule Nairobi</a></h1>
+                    <h1><a href="{{ path('index') }}" class="text-reset text-decoration-none">{{ 'template.base.header.title' | trans({'%smallStart%': '<small>', '%smallEnd%': '</small>', '%lineBreak%': '<br />'}) | raw }}</a></h1>
                 </div>
                 <div class="col-4">
-                    <a href="{{ path('index') }}" class="text-reset text-decoration-none"><img src="{{ asset('build/images/dsn.png') }}" class="w-75 my-2 float-right rounded img-fluid" alt="Deutsche Schule Nairobi"></a>
+                    <a href="{{ path('index') }}" class="text-reset text-decoration-none"><img src="{{ asset('build/images/dsn.png') }}" class="w-75 my-2 float-right rounded img-fluid" alt="{{ 'template.base.header.logoAlt' | trans }}"></a>
                 </div>
             </div>
             {% block body %}{% endblock %}
@@ -26,12 +26,14 @@
                 <div class="row bg-success align-items-center rounded-top text-white">
                     <div class="col-12">
                         <p class="h4 mt-2">
-                            <a href="http://www.dsnairobi.de/index.php?article_id=101&amp;clang=0" class="text-reset">Impressum</a>
+                            <a href="http://www.dsnairobi.de/index.php?article_id=101&amp;clang=0" class="text-reset">{{ 'template.base.footer.imprint' | trans}}</a>
+                            {% set switchLocale = app.request.locale == 'de' ? 'en' : 'de' %}                            
+                            <a href="{{ path(app.request.attributes.get('_route'), {'_locale': switchLocale}) }}" class="text-reset"><img height="40" class="mx-2" src="{{ asset('build/images/' ~ switchLocale ~ '.png') }}" alt="{{ ('template.base.footer.' ~ switchLocale) | trans }}" /></a>                            
                             {% if is_granted('ROLE_USER') %}
-                                <a href="{{ path('logout') }}" class="text-reset ml-3 float-right">Ausloggen</a>
+                                <a href="{{ path('logout') }}" class="text-reset ml-3 float-right">{{ 'template.base.footer.logout' | trans}}</a>
                             {% endif %}
                             {% if is_granted('ROLE_ADMIN') %}
-                                <a href="{{ path('admin_index') }}" class="text-reset ml-3 float-right">Admin</a>
+                                <a href="{{ path('admin_index') }}" class="text-reset ml-3 float-right">{{ 'template.base.footer.admin' | trans}}</a>
                             {% endif %}
                         </p>
                     </div>

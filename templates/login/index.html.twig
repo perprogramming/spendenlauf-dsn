@@ -1,11 +1,11 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Einloggen{% endblock %}
+{% block title %}{{ 'template.login.title' | trans }}{% endblock %}
 
 {% block body %}
     <div class="row mb-5">
         <div class="col-12">
-            <h2>Einloggen</h2>
+            <h2>{{ 'template.login.title' | trans }}</h2>
             {% for message in app.flashes('info') %}
                 <div class="alert alert-success">
                     {{ message }}
@@ -16,14 +16,14 @@
                     {{ message }}
                 </div>
             {% endfor %}
-            <p>Um dich einzuloggen, gibst du einfach in das folgende Feld deine schulische E-Mail-Adresse ein, z.B. <span class="font-italic font-weight-bold">max.mustermann@germanschool.co.ke</span>. Sobald du das Formular abschickst, erhälst du eine E-Mail mit einem Link. Klicke einfach auf den Link in der E-Mail, um dich einzuloggen.</p>
+            <p>{{ 'template.login.text' | trans({'%italicStart%': '<span class="font-italic font-weight-bold">', '%italicEnd%': '</span>'}) | raw }}</p>
             <form method="post" action="{{ path("login_email") }}">
                 <div class="form-group">
-                    <label for="emailField">E-Mail Adresse</label>
+                    <label for="emailField">{{ 'template.login.emailLabel' | trans }}</label>
                     <input type="email" name="email" id="emailField" class="form-control">
                 </div>
                 <div class="form-group">
-                    <button type="submit" class="btn btn-success">Link versenden</button>
+                    <button type="submit" class="btn btn-success">{{ 'template.login.buttonLabel' | trans }}</button>
                     <input type="hidden" name="token" value="{{ csrf_token('login-email') }}"/>
                 </div>
             </form>

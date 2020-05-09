@@ -1,0 +1,58 @@
+template:
+    base:
+        title:
+            suffix: Donation Run of the German School Nairobi
+        header:
+            title: '%smallStart%Donation Run of the%smallEnd%%lineBreak%German School Nairobi'
+            logoAlt: German School Nairobi
+        footer:
+            imprint: Imprint
+            logout: Logout
+            admin: Admin
+            en: English
+            de: German
+    login:
+        title: Login
+        text: |
+            Just enter your school email address (e.g. %italicStart%john.doe@germanschool.co.ke%italicEnd%) into the following field.
+            You will get an email containing a link as soon as you submit the form.
+            Click the link in the email to get logged in.            
+        emailLabel: Email address
+        buttonLabel: Send link
+    index:
+        title: Homepage
+        total:
+            title: Current Donation
+            stats: So far %strongStart%%numberOfRounds% rounds%strongEnd% and %strongStart%%currentAmount% KSh%strongEnd% have been achieved!
+            target: Our goal is to gather %strongStart%%targetAmount% KSh%strongEnd% in total.
+            refresh: Refresh
+            chart:
+                currentAmount: So far %currentAmount% KSh were gathered
+                missingAmount: '%missingAmount% KSh are still missing'
+        personal:
+            title: Your Current Donation
+            stats: So far you have run %lineBreak%%strongStart%%numberOfRounds% rounds%strongEnd%%lineBreak% and by that you have added %lineBreak%%strongStart%%currentAmount% KSh%strongEnd%%lineBreak% to the donation!
+            addRound: Add round!
+            settings: Configure your donation per round
+    settings:
+        title: Your Settings
+        rewardLabel: Donation per round (KSh)
+        submitLabel: Save
+controller:
+    rounds:
+        parameter:
+            round_was_added: roundWasAdded
+    login:
+        messages:
+            invalidEmail: Please only use your school email address (e.g. john.doe@germanschool.co.ke)!
+            success: An email containing the link was successfully sent!
+        email:
+            subject: Login to the Donation Run
+            text: |
+                Hello!
+                
+                Login to the Donation Run now by clicking the following link:
+                  
+                %url%
+                
+                Have fun!

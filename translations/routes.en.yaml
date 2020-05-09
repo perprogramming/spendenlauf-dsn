@@ -1,0 +1,6 @@
+login_index: /login/
+login_email: /login/send-email/
+logout: /logout/
+user_settings: /settings
+user_settings_update: /settings/update
+add_round: /add-round/

@@ -5,16 +5,14 @@
 {% block body %}    
     <div class="row mb-1">        
         <div class="col-12 text-center">            
-            <h2>
-                Deine Einstellungen
-            </h2>
+            <h2>{{ 'template.settings.title' | trans }}</h2>
             <form method="post" action="{{ path("user_settings_update") }}" class="text-left">
                 <div class="form-group">
-                    <label for="rewardPerRound">Geldbetrag pro Runde (KSh)</label>
+                    <label for="rewardPerRound">{{ 'template.settings.rewardLabel' | trans }}</label>
                     <input type="number" name="reward_per_round" id="rewardPerRound" class="form-control" value="{{ reward_per_round | default(0) }}" min="0">
                 </div>
                 <div class="form-group">
-                    <button type="submit" class="btn btn-success">Speichern</button>
+                    <button type="submit" class="btn btn-success">{{ 'template.settings.submitLabel' | trans }}</button>
                     <input type="hidden" name="token" value="{{ csrf_token('update-user-settings') }}"/>
                 </div>
             </form>

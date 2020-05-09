@@ -6,6 +6,7 @@ use App\Entity\User;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Routing\RouterInterface;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Exception\AuthenticationException;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -16,11 +17,13 @@ class Authenticator extends AbstractGuardAuthenticator
 {
     private $em;
     private $kernelSecret;
+    private $router;
 
-    public function __construct(EntityManagerInterface $em, string $kernelSecret)
+    public function __construct(EntityManagerInterface $em, string $kernelSecret, RouterInterface $router)
     {
         $this->em = $em;
         $this->kernelSecret = $kernelSecret;
+        $this->router = $router;
     }
 
     public function supports(Request $request)
@@ -56,7 +59,7 @@ class Authenticator extends AbstractGuardAuthenticator
 
     public function onAuthenticationSuccess(Request $request, TokenInterface $token, $providerKey)
     {
-        return new RedirectResponse("/");
+        return new RedirectResponse($this->router->generate('index'));
     }
 
     public function onAuthenticationFailure(Request $request, AuthenticationException $exception)
@@ -66,7 +69,7 @@ class Authenticator extends AbstractGuardAuthenticator
 
     public function start(Request $request, AuthenticationException $authException = null)
     {
-        return new RedirectResponse("/einloggen/");
+        return new RedirectResponse($this->router->generate('login_index'));
     }
 
     public function supportsRememberMe()

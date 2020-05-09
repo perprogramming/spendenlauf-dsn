@@ -12,13 +12,14 @@ use App\Repository\SettingsRepository;
 use App\Repository\UserRepository;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 class IndexController extends AbstractController
 {
     /**
      * @Route("/", name="index")
      */
-    public function index(Request $request)
+    public function index(Request $request, TranslatorInterface $translator)
     {        
         $roundsRepository = $this->getRoundRepository();
      
@@ -35,7 +36,7 @@ class IndexController extends AbstractController
             'myRounds' => $myRounds,           
             'myCurrentAmount' => $myCurrentAmount,
             'statistics' => $roundsRepository->getStatistics(),
-            'roundWasAdded' => $request->query->getBoolean('rundeWurdeHinzugefuegt')
+            'roundWasAdded' => $request->query->getBoolean($translator->trans('controller.rounds.parameter.round_was_added'))
         ]);
     }
 
